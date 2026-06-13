@@ -64,3 +64,94 @@ The dataset used in this project represents a bookstore management system design
 |Orders	    |         Order_Date |    DATE       |
 |Orders	    |          Quantity	 |     INT       |
 |Orders	    |      Total_Amount	 | NUMERIC(10,2) |
+
+## SQL Analysis and Queries
+
+### Q1) retrieve all books in the fiction genre 
+SELECT * FROM Books 
+WHERE Genre='Fiction'; 
+
+### Q2) find books published after the year 1950;
+SELECT * FROM BOOKS 
+WHERE published_year > 1950; 
+
+### Q3) list all the customers from canada
+SELECT * FROM CUSTOMERS 
+WHERE country='Canada'; 
+
+### Q4) Show orders placed in november 2023 
+SELECT * FROM orders 
+where Order_date between '01-11-2023' AND '30-11-2023';
+
+### Q5) retrieve the total stock of books available 
+SELECT sum(stock) AS Total_stock FROM BOOKS; 
+
+### Q6) find the details of the most expensive book; 
+SELECT * FROM BOOKS 
+order by price DESC LIMIT 1; 
+
+### Q7) Show all customers who ordered more than 1 quantity of book 
+SELECT * FROM Orders 
+WHERE quantity>1; 
+
+### Q8) retrieve all the orders where the total amount exceeds $20
+SELECT * FROM orders 
+where total_amount>20; 
+
+### Q9) list all the genres available in the book table 
+SELECT DISTINCT(genre) FROM BOOKS; 
+
+### Q10) find the book with lowest stock 
+SELECT * FROM BOOKS 
+ORDER BY stock ASC ; 
+
+### Q11) calculate the total revenue generated from all orders
+SELECT sum(total_amount) AS total_profit FROM orders; 
+
+### Q12) retrieve the total numbers of books sold for each genre;
+SELECT b.genre,sum(o.quantity) FROM ORDERS o 
+JOIN BOOKS b on b.book_id=o.book_id 
+GROUP BY genre; 
+
+### Q13) find the avg price of books in the 'fantancy' genre 
+SELECT AVG(PRICE) AS AVG_PRICE_of_fantasy_genre FROM BOOKS
+WHERE genre='Fantasy'; 
+
+### Q14) list customers who placed atleast 2 orders 
+SELECT c.name,c.customer_id,COUNT(o.quantity) FROM orders o 
+join customers c on c.customer_id=o.customer_id 
+GROUP BY c.customer_id,c.name 
+HAVING COUNT (o.quantity) >=2;
+
+### Q15)find the most frequently order book 
+SELECT book_id,COUNT(order_id) as order_count FROM orders 
+GROUP BY book_id 
+ORDER BY order_count DESC LIMIT 1;
+
+### Q16) show the top 3 most expensive books of fantasy genre; 
+SELECT * FROM BOOKS 
+WHERE genre='Fantasy' 
+ORDER BY price DESC LIMIT 3; 
+
+### Q17) retrieve the total quantity of book sold by each author 
+SELECT b.author,b.title,SUM(o.quantity) FROM orders o 
+join books b on b.book_id=o.book_id 
+GROUP BY b.author,b.title; 
+
+### Q18) list the cities where customers who spent over $30 are located 
+SELECT distinct(c.city),o.total_amount FROM Orders o 
+join customers c on c.customer_id=o.customer_id 
+WHERE o.total_amount> 30; 
+
+### Q19)find the customer who spent most on orders 
+
+SELECT c.name,c.Customer_id,sum(o.total_amount) as amount_spent FROM orders o 
+join customers c on c.customer_id=o.customer_id 
+GROUP BY c.name,c.customer_id 
+ORDER BY amount_spent DESC; 
+
+### Q20) calculate the stock remaining after fulfilling all orders 
+SELECT b.book_id,b.title,b.stock,COALESCE(SUM(o.quantity),0) AS order_quantity, b.stock-COALESCE(SUM(o.quantity),0) AS remaining_stock FROM books b
+LEFT JOIN orders o ON b.book_id=o.book_id 
+GROUP BY b.book_id
+ORDER BY b.book_id;
