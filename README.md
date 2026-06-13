@@ -68,9 +68,9 @@ The dataset used in this project represents a bookstore management system design
 ## SQL Analysis and Queries
 
 ### Q1) retrieve all books in the fiction genre
----sql
+
 SELECT * FROM Books 
-WHERE Genre='Fiction'; ---
+WHERE Genre='Fiction'; 
 
 ### Q2) find books published after the year 1950;
 SELECT * FROM BOOKS 
@@ -156,3 +156,17 @@ SELECT b.book_id,b.title,b.stock,COALESCE(SUM(o.quantity),0) AS order_quantity, 
 LEFT JOIN orders o ON b.book_id=o.book_id 
 GROUP BY b.book_id
 ORDER BY b.book_id;
+
+## Key Insights
+
+- Fiction is one of the most frequently analyzed and popular book genres in the dataset.
+- Books published in earlier years are still part of active sales analysis.
+- Customer distribution can be analyzed based on country and city.
+- Revenue is generated mainly through high-value and frequently ordered books.
+- A small number of books contribute to a large portion of total sales.
+- Customer purchasing behavior shows that some users place multiple orders.
+- Inventory analysis helps identify low-stock and high-demand books.
+
+## conclusion
+
+The Bookstore Sales Analysis using SQL project successfully demonstrates how PostgreSQL can be used to manage and analyze real-world business data. By designing relational tables and executing analytical SQL queries, the project provides valuable insights into sales performance, customer behavior, and inventory management. It highlights the importance of SQL in data analysis and decision-making for business growth.
