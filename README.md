@@ -67,9 +67,10 @@ The dataset used in this project represents a bookstore management system design
 
 ## SQL Analysis and Queries
 
-### Q1) retrieve all books in the fiction genre 
+### Q1) retrieve all books in the fiction genre
+---sql
 SELECT * FROM Books 
-WHERE Genre='Fiction'; 
+WHERE Genre='Fiction'; ---
 
 ### Q2) find books published after the year 1950;
 SELECT * FROM BOOKS 
